@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan this ♡ | Surprise Bunga Lily</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- QRCode.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .qr-layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 18px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .qr-romantic-card {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(18, 11, 16, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 182, 193, 0.28);
+            border-radius: 28px;
+            padding: 2.8rem 2rem;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(255, 93, 143, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qr-card-top-line {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-pink), transparent);
+        }
+
+        .qr-header-title {
+            font-family: var(--font-script);
+            font-size: clamp(2.4rem, 6vw, 3.4rem);
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 183, 197, 0.6);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .qr-header-sub {
+            font-size: 1rem;
+            color: var(--text-dusty);
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        /* QR Frame with Lily Accents */
+        .qr-box-container {
+            position: relative;
+            display: inline-block;
+            margin: 0 auto;
+            padding: 16px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 93, 143, 0.35);
+            overflow: hidden;
+        }
+
+        .qr-lily-corner-tl {
+            position: absolute;
+            top: -24px;
+            left: -24px;
+            width: 65px;
+            height: auto;
+            filter: drop-shadow(0 4px 10px rgba(255, 93, 143, 0.45));
+            z-index: 10;
+            pointer-events: none;
+            animation: gentleBreeze 6s ease-in-out infinite alternate;
+        }
+
+        .qr-lily-corner-br {
+            position: absolute;
+            bottom: -24px;
+            right: -24px;
+            width: 65px;
+            height: auto;
+            transform: rotate(180deg);
+            filter: drop-shadow(0 -4px 10px rgba(255, 93, 143, 0.45));
+            z-index: 10;
+            pointer-events: none;
+            animation: gentleBreezeReverse 7s ease-in-out infinite alternate;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 220px;
+            min-height: 220px;
+            background: #ffffff;
+            position: relative;
+        }
+
+        #qrcode img, #qrcode canvas {
+            display: block;
+            margin: 0 auto;
+            border-radius: 6px;
+        }
+
+        /* Glowing Animated Scan Line */
+        .qr-scanline {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff2e63, #ffffff, #ff2e63, transparent);
+            box-shadow: 0 0 12px 2px #ff5d8f, 0 0 20px 4px rgba(230, 57, 115, 0.6);
+            z-index: 8;
+            pointer-events: none;
+            animation: laserScan 2.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes laserScan {
+            0% {
+                top: 4%;
+                opacity: 0.85;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                top: 94%;
+                opacity: 0.85;
+            }
+        }
+
+        .qr-footer-caption {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            margin-top: 2rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .qr-action-btn {
+            margin-top: 1.6rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-pink);
+            padding: 10px 24px;
+            font-size: 0.88rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-sans);
+        }
+
+        .qr-action-btn:hover {
+            background: rgba(255, 93, 143, 0.2);
+            border-color: var(--accent-pink);
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(255, 93, 143, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .qr-site-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1.2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.86rem;
+            transition: color 0.3s;
+        }
+
+        .qr-site-link:hover {
+            color: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED AMBIENT LILY CORNERS -->
+    <div class="floral-ambient-layer">
+        <img src="assets/lily-corner.png" class="lily-ambient-tl" alt="Lily Corner">
+        <img src="assets/lily-corner.png" class="lily-ambient-br" alt="Lily Corner">
+    </div>
+
+    <!-- PARTICLES LAYER -->
+    <div id="dust-container"></div>
+    <div id="sparkles-container"></div>
+    <div id="petals-container"></div>
+
+    <div class="qr-layout">
+        <div class="qr-romantic-card">
+            <div class="qr-card-top-line"></div>
+
+            <h1 class="qr-header-title">Scan this ♡</h1>
+            <p class="qr-header-sub">Ada sesuatu buat kamu...</p>
+
+            <!-- QR Code Box with Real Lily Framing and Scan Line -->
+            <div class="qr-box-container">
+                <img src="assets/lily-single.png" class="qr-lily-corner-tl" alt="Lily Deco">
+                <img src="assets/lily-single.png" class="qr-lily-corner-br" alt="Lily Deco">
+                
+                <!-- Moving Laser Scan Line -->
+                <div class="qr-scanline"></div>
+                
+                <!-- QR Element -->
+                <div id="qrcode"></div>
+            </div>
+
+            <p class="qr-footer-caption">
+                Scan, dan temukan kejutan kecil ♡
+            </p>
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <button id="download-qr-btn" class="qr-action-btn">
+                    <i class="fas fa-arrow-down"></i> Simpan Gambar QR Code
+                </button>
+                
+                <a href="index.html" class="qr-site-link">
+                    <i class="fas fa-heart"></i> Buka Website Langsung
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Scripts -->
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const qrcodeContainer = document.getElementById('qrcode');
+            const downloadBtn = document.getElementById('download-qr-btn');
+
+            // Generate destination link to index.html
+            const currentHost = window.location.origin;
+            const currentPath = window.location.pathname.replace('qr.html', 'index.html');
+            const targetUrl = currentHost ? `${currentHost}${currentPath}` : 'index.html';
+
+            // High precision QR rendering with pure black and pure white for flawless optical scan
+            new QRCode(qrcodeContainer, {
+                text: targetUrl,
+                width: 210,
+                height: 210,
+                colorDark: "#080808",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Download handler
+            downloadBtn.addEventListener('click', () => {
+                const img = qrcodeContainer.querySelector('img');
+                const canvas = qrcodeContainer.querySelector('canvas');
+                let dataUrl = null;
+                if (img && img.src) dataUrl = img.src;
+                else if (canvas) dataUrl = canvas.toDataURL("image/png");
+
+                if (dataUrl) {
+                    const a = document.createElement('a');
+                    a.download = 'QR-Surprise-Bububb.png';
+                    a.href = dataUrl;
+                    a.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

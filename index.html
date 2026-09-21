@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Bububb ♡ | Dark Romantic Cinematic Surprise</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- FIXED AMBIENT PINK LILY ACCENTS (Bunga Lily Asli dari Foto Referensi) -->
+    <div class="floral-ambient-layer">
+        <img src="assets/lily-corner.png" class="lily-ambient-tl" alt="Pink Lily Corner">
+        <img src="assets/lily-corner.png" class="lily-ambient-br" alt="Pink Lily Corner">
+
+        <!-- Depth-of-Field Foreground Blurry Lilies -->
+        <img src="assets/lily-single.png" class="lily-dof-bottom" alt="Foreground Lily Depth">
+        <img src="assets/lily-single.png" class="lily-dof-top" alt="Foreground Lily Depth">
+    </div>
+
+    <!-- FLOATING LIGHT DUST, PETALS & SPARKLES -->
+    <div id="dust-container"></div>
+    <div id="sparkles-container"></div>
+    <div id="petals-container"></div>
+
+    <!-- ==========================================
+         MUSIK LATAR
+         Cara ganti lagu: Masukkan file lagu kamu ke dalam folder "assets/" 
+         dan beri nama "music.mp3".
+         ========================================== -->
+    <button id="music-toggle" class="music-btn" title="Nyalakan/Matikan Musik">
+        <i class="fas fa-music"></i>
+    </button>
+    <audio id="bg-music" loop preload="auto">
+        <source src="assets/music.mp3" type="audio/mpeg">
+        <source src="assets/music.mp3.mp3" type="audio/mpeg">
+        <source src="assets/music.m4a" type="audio/mp4">
+        <source src="assets/music.wav" type="audio/wav">
+    </audio>
+
+    <!-- ==========================================
+         1. CINEMATIC OPENING SCREEN
+         ========================================== -->
+    <section id="opening-screen">
+        <div class="opening-lily-wrapper">
+            <img src="assets/lily-single.png" class="opening-lily-img" alt="Pink Lily Bloom">
+        </div>
+
+        <h1 class="opening-text-1">Hey, beautiful ♡</h1>
+        <p class="opening-text-2">I made something for you...</p>
+
+        <button id="btn-open-surprise" class="opening-btn">
+            Open it ♡
+        </button>
+    </section>
+
+    <!-- ==========================================
+         MAIN EXPERIENCE CONTENT
+         ========================================== -->
+    <main id="main-content" class="hidden">
+
+        <!-- 2. HERO SECTION: FRAMED PHOTO & LILIES -->
+        <section class="section-wrapper hero-container cinematic-reveal">
+            <span class="section-tag">A Special Note</span>
+            <h1 class="section-title">Happy Aniversary, piutiw ♡</h1>
+            <p class="section-subtitle">Untuk seseorang yang selalu membuat duniaku terasa jauh lebih indah.Anjayyy</p>
+
+            <div class="hero-photo-frame-wrapper">
+                <!-- Lily decorations framing the main photo -->
+                <img src="assets/lily-single.png" class="hero-lily-deco-tl" alt="Lily Frame Deco">
+                <img src="assets/lily-single.png" class="hero-lily-deco-br" alt="Lily Frame Deco">
+                <img src="assets/lily-petal.png" class="hero-petals-scatter hero-petal-1" alt="Lily Petal">
+                <img src="assets/lily-petal.png" class="hero-petals-scatter hero-petal-2" alt="Lily Petal">
+
+                <div class="hero-photo-frame">
+                    <img src="assets/foto1.jpeg" alt="Foto Utama Bububb"
+                        onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80'">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. OUR MEMORIES: SCRAPBOOK COLLAGE WITH FULLSCREEN LIGHTBOX -->
+        <section class="section-wrapper cinematic-reveal">
+            <div style="text-align: center;">
+                <span class="section-tag">Moments We Share</span>
+                <h2 class="section-title">Our Memories ♡</h2>
+                <p class="section-subtitle">Setiap tawa, langkah, dan cerita kecil bersamamu adalah bagian favoritku.
+                </p>
+            </div>
+
+            <div class="scrapbook-collage">
+                <!-- Decorative Lily Pins between photos -->
+                <img src="assets/lily-single.png" class="scrapbook-lily-pin pin-1" alt="Lily Pin">
+                <img src="assets/lily-single.png" class="scrapbook-lily-pin pin-2" alt="Lily Pin">
+
+                <!-- Memory Item 1 -->
+                <div class="scrapbook-item">
+                    <div class="scrapbook-tape"></div>
+                    <div class="scrapbook-img-wrapper">
+                        <img src="assets/foto2.jpeg" alt="Memory 1"
+                            onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'">
+                    </div>
+                    <div class="scrapbook-caption">The sweetest smile ♡</div>
+                </div>
+
+                <!-- Memory Item 2 -->
+                <div class="scrapbook-item">
+                    <div class="scrapbook-tape"></div>
+                    <div class="scrapbook-img-wrapper">
+                        <img src="assets/foto.jpeg" alt="Memory 2"
+                            onerror="this.src='https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80'">
+                    </div>
+                    <div class="scrapbook-caption">Always laughing with you ♡</div>
+                </div>
+
+                <!-- Memory Item 3 -->
+                <div class="scrapbook-item">
+                    <div class="scrapbook-tape"></div>
+                    <div class="scrapbook-img-wrapper">
+                        <img src="assets/foto3.jpeg" alt="Memory 3"
+                            onerror="this.src='https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=600&q=80'">
+                    </div>
+                    <div class="scrapbook-caption">Favorite day out ♡</div>
+                </div>
+
+                <!-- Memory Item 4 -->
+                <div class="scrapbook-item">
+                    <div class="scrapbook-tape"></div>
+                    <div class="scrapbook-img-wrapper">
+                        <img src="assets/foto4.jpeg" alt="Memory 4"
+                            onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80'">
+                    </div>
+                    <div class="scrapbook-caption">Just you and me ♡</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1.5rem;">
+                <i class="fas fa-hand-pointer" style="margin-right: 5px;"></i> Klik foto untuk melihat ukuran penuh
+            </p>
+        </section>
+
+        <!-- 4. LOVE LETTER (FOR YOU ♡) -->
+        <section class="section-wrapper cinematic-reveal">
+            <div class="love-letter-card">
+                <h2 class="love-letter-title">For You ♡</h2>
+                <div class="love-letter-body">
+                    Happy aniversarry, sayang.
+
+                    Aku cuma mau bilang terima kasih karena sudah hadir
+                    dan menjadi bagian dari hari-hariku.
+
+                    Mungkin aku nggak selalu bisa mengungkapkan semuanya
+                    dengan kata-kata, tapi aku harap kamu tahu kalau kamu
+                    punya tempat yang spesial buat aku.
+
+                    makasih sayang udah sabar selama ini, udah bertahan sejauh ini,
+                    makin sayang sama kamu.makin nyaman sama kamu.makin cinte
+                    Semoga semua hal baik datang ke kamu.
+                    Semoga kamu selalu bahagia.
+
+                    And I hope we keep making beautiful memories together.
+
+                    I love you. ♡
+                </div>
+                <div class="love-letter-sign">— with all my heart ♡</div>
+            </div>
+        </section>
+
+        <!-- 5. FLOWER HEART SECTION -->
+        <section class="flower-heart-section cinematic-reveal">
+            <div class="flower-heart-container">
+                <!-- Rangkaian Bunga Lily Asli Membentuk Hati -->
+                <img src="assets/lily-heart.png" class="flower-heart-wreath" alt="Heart of Pink Lilies">
+
+                <div class="flower-heart-content">
+                    <div class="flower-heart-text">
+                        I LOVE YOU ♡
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. LINK TO QR CODE PAGE -->
+        <section class="section-wrapper cinematic-reveal"
+            style="text-align: center; padding-top: 1rem; padding-bottom: 2rem;">
+        </section>
+
+        <!-- 7. CINEMATIC ENDING SECTION -->
+        <section id="ending-section" class="ending-section">
+            <!-- Rising Lilies from Bottom -->
+            <div class="rising-lily-container">
+                <img src="assets/lily-single.png" class="rising-lily" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
+            </div>
+
+            <!-- Staged Text Reveals -->
+            <h2 class="ending-text-line ending-line-1">Thank you for being part of my story.</h2>
+            <h2 class="ending-text-line ending-line-2">I love you, always. ♡</h2>
+            <p class="ending-text-line ending-line-3">— forever yours</p>
+        </section>
+
+    </main>
+
+    <!-- FULLSCREEN LIGHTBOX MODAL -->
+    <div id="lightbox-modal">
+        <button id="lightbox-close" class="lightbox-close-btn" title="Tutup">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content-wrapper">
+            <img id="lightbox-img" src="" alt="Memory Fullscreen">
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
