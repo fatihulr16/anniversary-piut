@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         function createPetal() {
             const petal = document.createElement('div');
             petal.className = 'falling-petal';
-            petal.style.backgroundImage = "url('assets/lily-petal.png')";
+            petal.style.backgroundImage = "url('lily-petal.png')";
 
             const width = Math.random() * 22 + 22; // 22px - 44px
             const height = width * 1.55;
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const petal = document.createElement('div');
                 petal.className = 'falling-petal';
-                petal.style.backgroundImage = "url('assets/lily-petal.png')";
+                petal.style.backgroundImage = "url('lily-petal.png')";
                 const width = Math.random() * 26 + 24;
                 petal.style.width = `${width}px`;
                 petal.style.height = `${width * 1.55}px`;
