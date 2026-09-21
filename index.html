@@ -9,27 +9,370 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Inline CSS (embedded for GitHub Pages compatibility) -->
+    <style>
+:root {
+    --bg-dark: #080808;
+    --bg-surface: #111111;
+    --bg-card: rgba(22, 14, 19, 0.72);
+    --border-subtle: rgba(255, 182, 193, 0.22);
+    --border-highlight: rgba(255, 105, 180, 0.45);
+    --text-pure: #ffffff;
+    --text-soft: #ffebee;
+    --text-pink: #ffb7c5;
+    --text-dusty: #d48c9f;
+    --text-muted: #9e6d7d;
+    --accent-pink: #ff5d8f;
+    --accent-rose: #e63973;
+    --accent-dark-rose: #8b1e42;
+    --accent-maroon: #4a0e22;
+    --glow-pink: rgba(255, 93, 143, 0.35);
+    --glow-soft: rgba(255, 183, 197, 0.25);
+    --font-serif: 'Cormorant Garamond', 'Playfair Display', serif;
+    --font-script: 'Dancing Script', cursive;
+    --font-sans: 'Poppins', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background-color: var(--bg-dark); }
+body {
+    background-color: var(--bg-dark);
+    background-image:
+        radial-gradient(circle at 50% 15%, rgba(139,30,66,0.22) 0%, transparent 50%),
+        radial-gradient(circle at 10% 45%, rgba(184,29,82,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 75%, rgba(139,30,66,0.18) 0%, transparent 45%),
+        radial-gradient(circle at 50% 95%, rgba(74,14,34,0.3) 0%, transparent 55%);
+    background-attachment: fixed;
+    color: var(--text-soft);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, transparent 40%, rgba(8,8,8,0.7) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+.floral-ambient-layer {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden; z-index: 2;
+}
+.lily-ambient-tl {
+    position: absolute; top: -50px; left: -50px;
+    width: clamp(200px,30vw,360px); height: auto;
+    filter: drop-shadow(0 10px 25px rgba(255,93,143,0.22));
+    opacity: 0.88;
+    animation: gentleBreeze 8s ease-in-out infinite alternate;
+}
+.lily-ambient-br {
+    position: absolute; bottom: -50px; right: -50px;
+    width: clamp(200px,30vw,360px); height: auto;
+    transform: rotate(180deg);
+    filter: drop-shadow(0 -10px 25px rgba(255,93,143,0.22));
+    opacity: 0.88;
+    animation: gentleBreezeReverse 9s ease-in-out infinite alternate;
+}
+.lily-dof-bottom {
+    position: absolute; bottom: -70px; left: 8%;
+    width: clamp(160px,22vw,280px); height: auto;
+    filter: blur(5px) drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+    opacity: 0.7;
+    animation: dofSway 10s ease-in-out infinite alternate;
+}
+.lily-dof-top {
+    position: absolute; top: -60px; right: 12%;
+    width: clamp(140px,18vw,220px); height: auto;
+    transform: rotate(25deg);
+    filter: blur(6px) drop-shadow(0 10px 25px rgba(0,0,0,0.8));
+    opacity: 0.65;
+    animation: dofSway 12s ease-in-out infinite alternate-reverse;
+}
+@keyframes gentleBreeze {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(2deg) translateY(4px) scale(1.02); }
+    100% { transform: rotate(-1.5deg) translateY(-3px) scale(0.99); }
+}
+@keyframes gentleBreezeReverse {
+    0% { transform: rotate(180deg) scale(1); }
+    50% { transform: rotate(182deg) translateY(-4px) scale(1.02); }
+    100% { transform: rotate(178.5deg) translateY(3px) scale(0.99); }
+}
+@keyframes dofSway {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-10px) rotate(2deg); }
+}
+#dust-container, #petals-container, #sparkles-container {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; overflow: hidden;
+}
+#dust-container { z-index: 2; }
+#sparkles-container { z-index: 3; }
+#petals-container { z-index: 4; }
+.dust-particle {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, #fff 10%, rgba(255,183,197,0.8) 50%, transparent 80%);
+    box-shadow: 0 0 8px rgba(255,183,197,0.8);
+    pointer-events: none;
+    animation: floatDust linear infinite;
+}
+@keyframes floatDust {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(-50px) translateX(30px); opacity: 0; }
+}
+.falling-petal {
+    position: absolute; top: -60px;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
+    will-change: transform, top, left;
+}
+@keyframes petalDrift {
+    0% { top: -10%; transform: translateX(0) rotate(0deg) rotateY(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    50% { transform: translateX(45px) rotate(80deg) rotateY(220deg); }
+    80% { opacity: 0.85; }
+    100% { top: 105%; transform: translateX(-30px) rotate(190deg) rotateY(540deg); opacity: 0; }
+}
+.sparkle-star {
+    position: absolute; width: 6px; height: 6px;
+    background: #ffffff; border-radius: 50%;
+    box-shadow: 0 0 10px 2px #ff85a2, 0 0 20px 4px #e63973;
+    pointer-events: none;
+    animation: sparkleTwinkle 2.4s ease-in-out infinite;
+}
+@keyframes sparkleTwinkle {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1.3) rotate(45deg); opacity: 1; }
+    100% { transform: scale(0) rotate(90deg); opacity: 0; }
+}
+#opening-screen {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100vh;
+    background-color: #080808;
+    z-index: 99999;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center; padding: 2rem;
+    transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1), transform 1.4s cubic-bezier(0.4,0,0.2,1);
+}
+#opening-screen.cinematic-exit {
+    opacity: 0; transform: scale(1.1); pointer-events: none;
+}
+.opening-lily-wrapper {
+    position: relative; width: 140px; height: 140px;
+    margin: 0 auto 2rem auto;
+    opacity: 0; transform: scale(0.6);
+    filter: drop-shadow(0 0 35px rgba(255,93,143,0.45));
+    animation: lilyBloom 2.8s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+}
+.opening-lily-img {
+    width: 100%; height: 100%; object-fit: contain;
+    animation: gentleBreeze 6s ease-in-out infinite alternate;
+}
+@keyframes lilyBloom {
+    0% { opacity: 0; transform: scale(0.6) rotate(-5deg); filter: drop-shadow(0 0 10px rgba(255,93,143,0.1)); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 40px rgba(255,93,143,0.6)); }
+}
+.opening-text-1 {
+    font-family: var(--font-script);
+    font-size: clamp(2.4rem,6vw,3.8rem);
+    color: var(--text-pure);
+    text-shadow: 0 0 20px rgba(255,183,197,0.6), 0 0 40px rgba(230,57,115,0.4);
+    opacity: 0; transform: translateY(15px);
+    transition: all 1.2s cubic-bezier(0.2,0.8,0.2,1);
+}
+.opening-text-2 {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem,2.5vw,1.25rem);
+    color: var(--text-dusty);
+    font-weight: 300; letter-spacing: 2px; margin-top: 1rem;
+    opacity: 0; transform: translateY(15px);
+    transition: all 1.2s cubic-bezier(0.2,0.8,0.2,1);
+}
+.opening-btn {
+    margin-top: 2.2rem;
+    background: linear-gradient(135deg, rgba(230,57,115,0.85), rgba(184,29,82,0.95));
+    border: 1px solid rgba(255,183,197,0.5);
+    color: #ffffff; padding: 14px 38px;
+    font-size: 1.1rem; font-weight: 500;
+    font-family: var(--font-sans);
+    border-radius: 50px; cursor: pointer;
+    box-shadow: 0 0 25px rgba(230,57,115,0.45);
+    opacity: 0; transform: translateY(15px);
+    transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+    outline: none; display: inline-flex; align-items: center; gap: 10px;
+}
+.opening-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 40px rgba(255,93,143,0.7);
+    border-color: #ffffff;
+}
+.opening-text-1.show, .opening-text-2.show, .opening-btn.show {
+    opacity: 1; transform: translateY(0);
+}
+.music-btn {
+    position: fixed; bottom: 24px; right: 24px;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(18,12,16,0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid var(--border-subtle);
+    color: var(--text-pink); font-size: 1.1rem;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    transition: all 0.3s ease;
+}
+.music-btn:hover {
+    border-color: var(--accent-pink); color: #ffffff;
+    box-shadow: 0 0 20px rgba(255,93,143,0.5);
+    transform: scale(1.08);
+}
+.music-btn.playing i { animation: musicRotate 4s linear infinite; color: var(--accent-pink); }
+@keyframes musicRotate { 100% { transform: rotate(360deg); } }
+#main-content { position: relative; z-index: 3; padding-bottom: 6rem; }
+.section-wrapper { max-width: 820px; margin: 0 auto; padding: 4.5rem 1.5rem; position: relative; }
+.section-tag {
+    display: inline-block; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 2.5px;
+    color: var(--text-dusty); margin-bottom: 0.8rem; font-weight: 500;
+}
+.section-title {
+    font-family: var(--font-script);
+    font-size: clamp(2.6rem,6vw,4.2rem);
+    color: var(--text-pure);
+    text-shadow: 0 0 25px rgba(255,93,143,0.4);
+    line-height: 1.25; margin-bottom: 1rem;
+}
+.section-subtitle { font-size: 1.05rem; color: var(--text-muted); font-weight: 300; letter-spacing: 0.5px; line-height: 1.6; }
+.hero-container { text-align: center; padding-top: 3rem; }
+.hero-photo-frame-wrapper { position: relative; display: inline-block; margin: 1.5rem auto 2.5rem auto; }
+.hero-photo-frame {
+    width: clamp(240px,45vw,340px); aspect-ratio: 4/5;
+    border-radius: 24px; overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.85);
+    box-shadow: 0 0 35px rgba(255,93,143,0.35), 0 20px 50px rgba(0,0,0,0.9);
+    position: relative; z-index: 2; background: #111;
+}
+.hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s cubic-bezier(0.2,0.8,0.2,1); }
+.hero-photo-frame:hover img { transform: scale(1.05); }
+.hero-lily-deco-tl {
+    position: absolute; top: -35px; left: -40px;
+    width: clamp(90px,16vw,130px); height: auto; z-index: 3;
+    filter: drop-shadow(0 5px 15px rgba(255,93,143,0.4));
+    animation: gentleBreeze 7s ease-in-out infinite alternate;
+}
+.hero-lily-deco-br {
+    position: absolute; bottom: -35px; right: -40px;
+    width: clamp(90px,16vw,130px); height: auto;
+    transform: rotate(180deg); z-index: 3;
+    filter: drop-shadow(0 -5px 15px rgba(255,93,143,0.4));
+    animation: gentleBreezeReverse 8s ease-in-out infinite alternate;
+}
+.hero-petals-scatter { position: absolute; width: 32px; height: auto; z-index: 3; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.6)); }
+.hero-petal-1 { bottom: -15px; left: 20px; transform: rotate(-35deg); }
+.hero-petal-2 { top: -10px; right: 25px; transform: rotate(45deg); }
+.scrapbook-collage { display: grid; grid-template-columns: repeat(2,1fr); gap: 25px; margin-top: 2.5rem; position: relative; }
+.scrapbook-item {
+    position: relative; background: #ffffff;
+    padding: 10px 10px 30px 10px; border-radius: 6px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.65), 0 0 20px rgba(255,93,143,0.15);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s ease, z-index 0.4s;
+    z-index: 2;
+}
+.scrapbook-item:hover { transform: scale(1.06) rotate(0deg) !important; box-shadow: 0 20px 50px rgba(0,0,0,0.85), 0 0 30px rgba(255,93,143,0.4); z-index: 10; }
+.scrapbook-item:nth-child(1) { transform: rotate(-3deg); }
+.scrapbook-item:nth-child(2) { transform: rotate(2.5deg); margin-top: 15px; }
+.scrapbook-item:nth-child(3) { transform: rotate(3deg); margin-top: -10px; }
+.scrapbook-item:nth-child(4) { transform: rotate(-2deg); }
+.scrapbook-img-wrapper { width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: 4px; background: #222; }
+.scrapbook-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.scrapbook-item:hover .scrapbook-img-wrapper img { transform: scale(1.08); }
+.scrapbook-caption { font-family: var(--font-script); font-size: 1.15rem; color: #333333; text-align: center; margin-top: 10px; position: absolute; bottom: 6px; left: 0; width: 100%; }
+.scrapbook-lily-pin { position: absolute; width: 50px; height: auto; z-index: 5; pointer-events: none; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
+.pin-1 { top: -20px; right: -15px; transform: rotate(15deg); }
+.pin-2 { bottom: -15px; left: -15px; transform: rotate(-25deg); }
+.scrapbook-tape { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 50px; height: 18px; background: rgba(255,230,238,0.45); backdrop-filter: blur(3px); box-shadow: 0 1px 3px rgba(0,0,0,0.15); z-index: 4; }
+.love-letter-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: clamp(2rem,5vw,3.5rem);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255,93,143,0.12);
+    position: relative; overflow: hidden;
+}
+.love-letter-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--accent-pink), transparent); }
+.love-letter-title { font-family: var(--font-script); font-size: 2.8rem; color: var(--text-pure); text-shadow: 0 0 15px rgba(255,183,197,0.4); margin-bottom: 1.5rem; text-align: center; }
+.love-letter-body { font-size: 1.05rem; line-height: 2; color: var(--text-soft); font-weight: 300; letter-spacing: 0.3px; white-space: pre-line; }
+.love-letter-sign { margin-top: 2rem; text-align: right; font-family: var(--font-script); font-size: 1.8rem; color: var(--text-pink); }
+.flower-heart-section { background-color: #080808; position: relative; padding: 6rem 1.5rem; text-align: center; overflow: hidden; }
+.flower-heart-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: min(500px,90vw); height: min(500px,90vw); background: radial-gradient(circle, rgba(230,57,115,0.22) 0%, transparent 65%); pointer-events: none; z-index: 1; }
+.flower-heart-container { position: relative; width: min(440px,86vw); height: min(440px,86vw); margin: 0 auto; display: flex; justify-content: center; align-items: center; z-index: 2; }
+.flower-heart-wreath { position: absolute; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 25px rgba(255,93,143,0.35)); animation: heartSway 6s ease-in-out infinite alternate; }
+@keyframes heartSway {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.025) rotate(1.2deg); }
+    100% { transform: scale(0.99) rotate(-1deg); }
+}
+.flower-heart-content { position: relative; z-index: 5; text-align: center; padding: 1rem; }
+.flower-heart-text { font-family: var(--font-script); font-size: clamp(2rem,5.5vw,3rem); color: #ffffff; letter-spacing: 2px; text-shadow: 0 0 15px #ff5d8f, 0 0 30px #e63973, 0 0 45px #8b1e42; animation: textHeartPulse 2.2s ease-in-out infinite; }
+@keyframes textHeartPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px #ff5d8f); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #ff5d8f); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px #ff5d8f); }
+}
+.ending-section { position: relative; background: linear-gradient(to bottom, #080808 0%, #030204 100%); min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 5rem 1.5rem; overflow: hidden; }
+.rising-lily-container { position: absolute; bottom: -60px; width: 100%; display: flex; justify-content: space-around; pointer-events: none; z-index: 1; }
+.rising-lily { width: clamp(70px,14vw,120px); height: auto; filter: drop-shadow(0 -10px 25px rgba(255,93,143,0.25)); opacity: 0; transform: translateY(60px); transition: all 1.8s cubic-bezier(0.2,0.8,0.2,1); }
+.rising-lily.active { opacity: 0.85; transform: translateY(0); }
+.ending-text-line { font-family: var(--font-script); color: var(--text-pure); opacity: 0; transform: translateY(20px); transition: all 1.4s cubic-bezier(0.2,0.8,0.2,1); margin-bottom: 1.5rem; z-index: 3; }
+.ending-line-1 { font-size: clamp(1.8rem,4.5vw,2.8rem); color: var(--text-soft); }
+.ending-line-2 { font-size: clamp(2.4rem,6vw,3.6rem); color: var(--accent-pink); text-shadow: 0 0 25px rgba(255,93,143,0.5); }
+.ending-line-3 { font-family: var(--font-serif); font-size: clamp(1.1rem,2.5vw,1.4rem); font-style: italic; color: var(--text-dusty); letter-spacing: 3px; }
+.ending-text-line.active { opacity: 1; transform: translateY(0); }
+#lightbox-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4,2,3,0.94); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 999999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
+#lightbox-modal.active { opacity: 1; pointer-events: auto; }
+.lightbox-content-wrapper { position: relative; max-width: 90vw; max-height: 85vh; border-radius: 18px; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 50px rgba(255,93,143,0.4), 0 25px 60px rgba(0,0,0,0.95); transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1); }
+#lightbox-modal.active .lightbox-content-wrapper { transform: scale(1); }
+#lightbox-img { display: block; max-width: 90vw; max-height: 82vh; object-fit: contain; }
+.lightbox-close-btn { position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); color: #ffffff; width: 46px; height: 46px; border-radius: 50%; font-size: 1.4rem; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1000000; transition: all 0.3s ease; }
+.lightbox-close-btn:hover { background: var(--accent-rose); border-color: #ffffff; transform: scale(1.1); }
+.cinematic-reveal { opacity: 0; transform: translateY(35px); transition: opacity 1s cubic-bezier(0.2,0.8,0.2,1), transform 1s cubic-bezier(0.2,0.8,0.2,1); }
+.cinematic-reveal.active { opacity: 1; transform: translateY(0); }
+.hidden { display: none !important; }
+@media (max-width: 600px) {
+    .scrapbook-collage { gap: 15px; }
+    .scrapbook-item { padding: 8px 8px 24px 8px; }
+    .love-letter-card { padding: 1.8rem 1.2rem; }
+    .flower-heart-container { width: 310px; height: 310px; }
+}
+    </style>
 </head>
 
 <body>
 
     <!-- FIXED AMBIENT PINK LILY ACCENTS (Bunga Lily Asli dari Foto Referensi) -->
     <div class="floral-ambient-layer">
-        <img src="lily-corner.png" class="lily-ambient-tl" alt="Pink Lily Corner">
-        <img src="lily-corner.png" class="lily-ambient-br" alt="Pink Lily Corner">
+        <img src="assets/lily-corner.png" class="lily-ambient-tl" alt="Pink Lily Corner">
+        <img src="assets/lily-corner.png" class="lily-ambient-br" alt="Pink Lily Corner">
 
         <!-- Depth-of-Field Foreground Blurry Lilies -->
-        <img src="lily-single.png" class="lily-dof-bottom" alt="Foreground Lily Depth">
-        <img src="lily-single.png" class="lily-dof-top" alt="Foreground Lily Depth">
+        <img src="assets/lily-single.png" class="lily-dof-bottom" alt="Foreground Lily Depth">
+        <img src="assets/lily-single.png" class="lily-dof-top" alt="Foreground Lily Depth">
     </div>
 
     <!-- FLOATING LIGHT DUST, PETALS & SPARKLES -->
@@ -57,7 +400,7 @@
          ========================================== -->
     <section id="opening-screen">
         <div class="opening-lily-wrapper">
-            <img src="lily-single.png" class="opening-lily-img" alt="Pink Lily Bloom">
+            <img src="assets/lily-single.png" class="opening-lily-img" alt="Pink Lily Bloom">
         </div>
 
         <h1 class="opening-text-1">Hey, beautiful ♡</h1>
@@ -81,13 +424,13 @@
 
             <div class="hero-photo-frame-wrapper">
                 <!-- Lily decorations framing the main photo -->
-                <img src="lily-single.png" class="hero-lily-deco-tl" alt="Lily Frame Deco">
-                <img src="lily-single.png" class="hero-lily-deco-br" alt="Lily Frame Deco">
-                <img src="lily-petal.png" class="hero-petals-scatter hero-petal-1" alt="Lily Petal">
-                <img src="lily-petal.png" class="hero-petals-scatter hero-petal-2" alt="Lily Petal">
+                <img src="assets/lily-single.png" class="hero-lily-deco-tl" alt="Lily Frame Deco">
+                <img src="assets/lily-single.png" class="hero-lily-deco-br" alt="Lily Frame Deco">
+                <img src="assets/lily-petal.png" class="hero-petals-scatter hero-petal-1" alt="Lily Petal">
+                <img src="assets/lily-petal.png" class="hero-petals-scatter hero-petal-2" alt="Lily Petal">
 
                 <div class="hero-photo-frame">
-                    <img src="foto1.jpeg" alt="Foto Utama Bububb"
+                    <img src="assets/foto1.jpeg" alt="Foto Utama Bububb"
                         onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=700&q=80'">
                 </div>
             </div>
@@ -104,14 +447,14 @@
 
             <div class="scrapbook-collage">
                 <!-- Decorative Lily Pins between photos -->
-                <img src="lily-single.png" class="scrapbook-lily-pin pin-1" alt="Lily Pin">
-                <img src="lily-single.png" class="scrapbook-lily-pin pin-2" alt="Lily Pin">
+                <img src="assets/lily-single.png" class="scrapbook-lily-pin pin-1" alt="Lily Pin">
+                <img src="assets/lily-single.png" class="scrapbook-lily-pin pin-2" alt="Lily Pin">
 
                 <!-- Memory Item 1 -->
                 <div class="scrapbook-item">
                     <div class="scrapbook-tape"></div>
                     <div class="scrapbook-img-wrapper">
-                        <img src="foto2.jpeg" alt="Memory 1"
+                        <img src="assets/foto2.jpeg" alt="Memory 1"
                             onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'">
                     </div>
                     <div class="scrapbook-caption">The sweetest smile ♡</div>
@@ -121,7 +464,7 @@
                 <div class="scrapbook-item">
                     <div class="scrapbook-tape"></div>
                     <div class="scrapbook-img-wrapper">
-                        <img src="foto.jpeg" alt="Memory 2"
+                        <img src="assets/foto.jpeg" alt="Memory 2"
                             onerror="this.src='https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80'">
                     </div>
                     <div class="scrapbook-caption">Always laughing with you ♡</div>
@@ -131,7 +474,7 @@
                 <div class="scrapbook-item">
                     <div class="scrapbook-tape"></div>
                     <div class="scrapbook-img-wrapper">
-                        <img src="foto3.jpeg" alt="Memory 3"
+                        <img src="assets/foto3.jpeg" alt="Memory 3"
                             onerror="this.src='https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=600&q=80'">
                     </div>
                     <div class="scrapbook-caption">Favorite day out ♡</div>
@@ -141,7 +484,7 @@
                 <div class="scrapbook-item">
                     <div class="scrapbook-tape"></div>
                     <div class="scrapbook-img-wrapper">
-                        <img src="foto4.jpeg" alt="Memory 4"
+                        <img src="assets/foto4.jpeg" alt="Memory 4"
                             onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80'">
                     </div>
                     <div class="scrapbook-caption">Just you and me ♡</div>
@@ -184,7 +527,7 @@
         <section class="flower-heart-section cinematic-reveal">
             <div class="flower-heart-container">
                 <!-- Rangkaian Bunga Lily Asli Membentuk Hati -->
-                <img src="lily-heart.png" class="flower-heart-wreath" alt="Heart of Pink Lilies">
+                <img src="assets/lily-heart.png" class="flower-heart-wreath" alt="Heart of Pink Lilies">
 
                 <div class="flower-heart-content">
                     <div class="flower-heart-text">
@@ -203,10 +546,10 @@
         <section id="ending-section" class="ending-section">
             <!-- Rising Lilies from Bottom -->
             <div class="rising-lily-container">
-                <img src="lily-single.png" class="rising-lily" alt="Lily Rising">
-                <img src="lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
-                <img src="lily-single.png" class="rising-lily" alt="Lily Rising">
-                <img src="lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" alt="Lily Rising">
+                <img src="assets/lily-single.png" class="rising-lily" style="transform: scaleX(-1);" alt="Lily Rising">
             </div>
 
             <!-- Staged Text Reveals -->
@@ -227,8 +570,208 @@
         </div>
     </div>
 
-    <!-- Custom JS -->
-    <script src="js/script.js"></script>
+    <!-- Inline JS (embedded for GitHub Pages compatibility) -->
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const openingScreen = document.getElementById('opening-screen');
+    const openingText1 = document.querySelector('.opening-text-1');
+    const openingText2 = document.querySelector('.opening-text-2');
+    const openingBtn = document.getElementById('btn-open-surprise');
+    const mainContent = document.getElementById('main-content');
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+
+    function playMusic() {
+        if (!bgMusic) return;
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                if (musicToggle) {
+                    musicToggle.classList.add('playing');
+                    musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+                }
+            }).catch(e => { console.log("Menunggu interaksi:", e); });
+        }
+    }
+    playMusic();
+    function startAudioOnFirstTouch() {
+        playMusic();
+        document.removeEventListener('click', startAudioOnFirstTouch);
+        document.removeEventListener('touchstart', startAudioOnFirstTouch);
+        document.removeEventListener('keydown', startAudioOnFirstTouch);
+    }
+    document.addEventListener('click', startAudioOnFirstTouch);
+    document.addEventListener('touchstart', startAudioOnFirstTouch);
+    document.addEventListener('keydown', startAudioOnFirstTouch);
+
+    setTimeout(() => { if (openingText1) openingText1.classList.add('show'); }, 1200);
+    setTimeout(() => { if (openingText2) openingText2.classList.add('show'); }, 2800);
+    setTimeout(() => { if (openingBtn) openingBtn.classList.add('show'); }, 4200);
+
+    if (openingBtn) {
+        openingBtn.addEventListener('click', () => {
+            playMusic();
+            if (openingScreen) openingScreen.classList.add('cinematic-exit');
+            burstPetals(12);
+            setTimeout(() => {
+                if (openingScreen) openingScreen.classList.add('hidden');
+                if (mainContent) {
+                    mainContent.classList.remove('hidden');
+                    void mainContent.offsetWidth;
+                }
+                initCinematicScrollObserver();
+            }, 1200);
+        });
+    }
+
+    if (musicToggle && bgMusic) {
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (bgMusic.paused) {
+                playMusic();
+            } else {
+                bgMusic.pause();
+                musicToggle.classList.remove('playing');
+                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+            }
+        });
+    }
+
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const scrapbookItems = document.querySelectorAll('.scrapbook-item');
+    scrapbookItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const img = item.querySelector('img');
+            if (img && lightboxModal && lightboxImg) {
+                lightboxImg.src = img.src;
+                lightboxImg.alt = img.alt || "Memory photo";
+                lightboxModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+    function closeLightbox() {
+        if (lightboxModal) { lightboxModal.classList.remove('active'); document.body.style.overflow = ''; }
+    }
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxModal) lightboxModal.addEventListener('click', (e) => { if (e.target === lightboxModal) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+    function initLightDust() {
+        const dustContainer = document.getElementById('dust-container');
+        if (!dustContainer) return;
+        function createDustParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'dust-particle';
+            const size = Math.random() * 3.5 + 1.5;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.left = `${Math.random() * 100}%`;
+            const duration = Math.random() * 8 + 7;
+            particle.style.animationDuration = `${duration}s`;
+            dustContainer.appendChild(particle);
+            setTimeout(() => { particle.remove(); }, duration * 1000);
+        }
+        setInterval(createDustParticle, 400);
+        for (let i = 0; i < 15; i++) setTimeout(createDustParticle, i * 200);
+    }
+
+    function initFallingPetals() {
+        const petalsContainer = document.getElementById('petals-container');
+        if (!petalsContainer) return;
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'falling-petal';
+            petal.style.backgroundImage = "url('assets/lily-petal.png')";
+            const width = Math.random() * 22 + 22;
+            const height = width * 1.55;
+            petal.style.width = `${width}px`;
+            petal.style.height = `${height}px`;
+            petal.style.left = `${Math.random() * 96 + 2}%`;
+            const duration = Math.random() * 6 + 7;
+            petal.style.animation = `petalDrift ${duration}s cubic-bezier(0.25,0.46,0.45,0.94) forwards`;
+            if (Math.random() > 0.6) petal.style.filter = `blur(${Math.random() * 1.5 + 0.5}px) drop-shadow(0 4px 10px rgba(0,0,0,0.8))`;
+            petalsContainer.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, duration * 1000);
+        }
+        setInterval(createPetal, 850);
+        for (let i = 0; i < 5; i++) setTimeout(createPetal, i * 350);
+    }
+
+    function burstPetals(count = 10) {
+        const petalsContainer = document.getElementById('petals-container');
+        if (!petalsContainer) return;
+        for (let i = 0; i < count; i++) {
+            setTimeout(() => {
+                const petal = document.createElement('div');
+                petal.className = 'falling-petal';
+                petal.style.backgroundImage = "url('assets/lily-petal.png')";
+                const width = Math.random() * 26 + 24;
+                petal.style.width = `${width}px`;
+                petal.style.height = `${width * 1.55}px`;
+                petal.style.left = `${Math.random() * 90 + 5}%`;
+                const duration = Math.random() * 4 + 5;
+                petal.style.animation = `petalDrift ${duration}s cubic-bezier(0.2,0.8,0.2,1) forwards`;
+                petalsContainer.appendChild(petal);
+                setTimeout(() => petal.remove(), duration * 1000);
+            }, i * 120);
+        }
+    }
+
+    function initSparkles() {
+        const sparklesContainer = document.getElementById('sparkles-container');
+        if (!sparklesContainer) return;
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle-star';
+            sparkle.style.left = `${Math.random() * 96 + 2}%`;
+            sparkle.style.top = `${Math.random() * 96 + 2}%`;
+            const size = Math.random() * 4 + 3;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            const duration = Math.random() * 1.5 + 2;
+            sparkle.style.animationDuration = `${duration}s`;
+            sparklesContainer.appendChild(sparkle);
+            setTimeout(() => { sparkle.remove(); }, duration * 1000);
+        }
+        setInterval(createSparkle, 600);
+    }
+
+    function initCinematicScrollObserver() {
+        const reveals = document.querySelectorAll('.cinematic-reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.15 });
+        reveals.forEach(r => observer.observe(r));
+
+        const endingSection = document.getElementById('ending-section');
+        if (endingSection) {
+            const endingObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const risingLilies = endingSection.querySelectorAll('.rising-lily');
+                        risingLilies.forEach((lily, idx) => { setTimeout(() => { lily.classList.add('active'); }, idx * 250); });
+                        const line1 = endingSection.querySelector('.ending-line-1');
+                        const line2 = endingSection.querySelector('.ending-line-2');
+                        const line3 = endingSection.querySelector('.ending-line-3');
+                        setTimeout(() => { if (line1) line1.classList.add('active'); }, 600);
+                        setTimeout(() => { if (line2) line2.classList.add('active'); }, 2000);
+                        setTimeout(() => { if (line3) line3.classList.add('active'); }, 3400);
+                        endingObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.25 });
+            endingObserver.observe(endingSection);
+        }
+    }
+
+    initLightDust();
+    initFallingPetals();
+    initSparkles();
+});
+    </script>
 </body>
 
 </html>
